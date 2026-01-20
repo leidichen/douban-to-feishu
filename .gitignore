@@ -8,6 +8,7 @@ coverage/
 # Production
 dist/
 build/
+build_temp/
 
 # Misc
 .DS_Store
@@ -16,6 +17,7 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+*.zip
 
 # Logs
 npm-debug.log*
