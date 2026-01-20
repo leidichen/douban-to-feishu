@@ -49,6 +49,10 @@ async function fetchFeishuAPI(url, options) {
 
 // --- Auth: Get Tenant Access Token ---
 async function getTenantAccessToken(appId, appSecret) {
+  // Trim inputs to avoid auth errors caused by spaces
+  appId = appId?.trim();
+  appSecret = appSecret?.trim();
+
   if (tokenCache.token && Date.now() < tokenCache.expireTime) {
     return tokenCache.token;
   }
