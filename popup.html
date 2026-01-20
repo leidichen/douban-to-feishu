@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>豆瓣同步到飞书</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-header">
+    <div class="logo-area">
+      <img src="icons/icon48.png" alt="Logo" class="app-logo">
+      <span class="app-title">豆瓣 → 飞书</span>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="sync">同步</button>
+      <button class="tab-btn" data-tab="settings">设置</button>
+      <button class="tab-btn" data-tab="help">帮助</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <!-- 同步面板 -->
+    <div id="panel-sync" class="tab-panel active">
+      <div class="control-bar">
+        <div class="select-wrapper">
+          <select id="itemType">
+            <option value="movie">🎬 电影/剧集</option>
+            <option value="book">📚 图书</option>
+          </select>
+        </div>
+        <button id="getInfo" class="btn-primary-outline">获取信息</button>
+      </div>
+
+      <div id="infoDisplay" class="info-card empty-state">
+        <div class="empty-placeholder">
+          <div class="icon">👋</div>
+          <p>请打开豆瓣条目页，点击上方“获取信息”</p>
+        </div>
+      </div>
+
+      <div class="action-footer">
+        <button id="saveToFeishu" class="btn-primary" disabled>
+          <span class="btn-text">保存到飞书</span>
+          <span class="btn-icon">➔</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 设置面板 -->
+    <div id="panel-settings" class="tab-panel">
+      <div class="settings-form">
+        <div class="form-section">
+          <h3>飞书应用配置</h3>
+          <div class="input-row">
+            <div class="input-group">
+              <label for="appId">App ID</label>
+              <input type="password" id="appId" placeholder="cli_...">
+            </div>
+            <div class="input-group">
+              <label for="appSecret">APP_SECRET</label>
+              <input type="password" id="appSecret" placeholder="输入 APP_SECRET">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3>多维表格配置</h3>
+          <div class="input-row">
+            <div class="input-group">
+              <label for="movieTableUrl">影视库链接 (Movie Table URL)</label>
+              <input type="text" id="movieTableUrl" placeholder="粘贴飞书影视库完整链接">
+            </div>
+            <div class="input-group">
+              <label for="bookTableUrl">图书库链接 (Book Table URL)</label>
+              <input type="text" id="bookTableUrl" placeholder="粘贴飞书图书库完整链接">
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button id="saveSettings" class="btn-primary">保存配置</button>
+          <button id="verifyConnection" class="btn-secondary">验证连接</button>
+        </div>
+
+        <!-- Initialization Section -->
+        <div class="settings-group" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;">
+          <label style="color: #666; font-size: 12px; display: block; margin-bottom: 8px;">高级功能：一键初始化空表</label>
+          <div class="btn-group">
+            <button id="initMovieTable" class="btn-secondary">初始化电影表</button>
+            <button id="initBookTable" class="btn-secondary">初始化图书表</button>
+          </div>
+          <p style="font-size: 10px; color: #999; margin-top: 5px;">* 请确保对应 Table ID 指向一个全新的空白数据表</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 帮助面板 -->
+    <div id="panel-help" class="tab-panel">
+      <div class="settings-form">
+        <div class="form-section">
+          <h3>帮助文档</h3>
+          <ul style="list-style: none; padding: 0;">
+             <li style="margin-bottom: 12px;">
+               <a href="https://github.com/leidichen/douban-to-feishu/blob/main/help/%E9%A3%9E%E4%B9%A6%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97.md" target="_blank" style="text-decoration: none; color: var(--primary-color); display: flex; align-items: center; gap: 8px; padding: 8px; background: #f0f4ff; border-radius: 6px;">
+                 <span>📖</span>
+                 <span>如何获取飞书相关KEY</span>
+               </a>
+             </li>
+             <li>
+               <a href="https://github.com/leidichen/douban-to-feishu/blob/main/help/%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97.md" target="_blank" style="text-decoration: none; color: var(--primary-color); display: flex; align-items: center; gap: 8px; padding: 8px; background: #f0f4ff; border-radius: 6px;">
+                 <span>💡</span>
+                 <span>插件功能介绍及使用方法</span>
+               </a>
+             </li>
+          </ul>
+        </div>
+        
+        <div class="form-section" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px;">
+          <h3>关于</h3>
+          <p style="font-size: 13px; color: var(--text-secondary);">
+            本插件旨在帮助用户方便地将豆瓣条目同步至飞书多维表格，实现个人书影音数据库的自动化管理。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-footer">
+    <div class="app-brand">DF Sync</div>
+    <div id="status" class="status-bar"></div>
+    <div class="version">v1.1.2</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
