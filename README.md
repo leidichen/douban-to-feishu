@@ -4,8 +4,7 @@
 
 一个精致、高效的 Chrome 浏览器扩展，致力于将你的豆瓣书影音数据一键无缝同步到飞书多维表格（Feishu Base）。打造属于你自己的个人文化数据库，从未如此简单。
 
-![预览图](https://via.placeholder.com/800x400?text=Preview+Image+Here) 
-*(此处建议放一张插件运行的 GIF 动图)*
+![](https://img.lenband.com/2026/01/ed1912be717c44e2c73a99a73850ca6b.png)
 
 ---
 
